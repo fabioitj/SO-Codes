@@ -7,4 +7,4 @@ void schedule();
 
 void insert(struct node **head, Task *task);
 
-void delete(struct node **head, Task *task)
+void delete(struct node **head, Task *task);
