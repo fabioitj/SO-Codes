@@ -4,7 +4,6 @@
 
 struct node *taskList = NULL;
 
-// add a task to the list 
 void add(char *name, int priority, int burst) {
     Task *newTask = malloc(sizeof(Task));
     newTask->name = name;
@@ -13,7 +12,6 @@ void add(char *name, int priority, int burst) {
     insert(&taskList, newTask);
 }
 
-// invoke the scheduler
 void schedule() {
     const int timeSlice = 10;  // Tamanho do quantum para o Round Robin
     struct node *temp = taskList;
@@ -33,7 +31,6 @@ void schedule() {
     }
 }
 
-// insert a task into the list based on Round Robin with Priority criteria
 void insert(struct node **head, Task *task) {
     struct node *newNode = malloc(sizeof(struct node));
     newNode->task = task;
@@ -58,7 +55,6 @@ void insert(struct node **head, Task *task) {
     }
 }
 
-// delete a task from the list
 void delete(struct node **head, Task *task) {
     if (*head == NULL) {
         return;
