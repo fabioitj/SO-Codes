@@ -1,20 +1,33 @@
-/**
- * Driver.c
- *
- * Schedule is in the format
- *
- *  [name] [priority] [CPU burst]
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "task.h"
 #include "list.h"
-#include "schedule_rr.h"
+#include "schedule_fcfs.h"
 
-#define SIZE    100
+#define SIZE 100
+
+char* strsep(char** stringp, const char* delim)
+{
+  char* start = *stringp;
+  char* p;
+
+  p = (start != NULL) ? strpbrk(start, delim) : NULL;
+
+  if (p == NULL)
+  {
+    *stringp = NULL;
+  }
+  else
+  {
+    *p = '\0';
+    *stringp = p + 1;
+  }
+
+  return start;
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -27,7 +40,6 @@ int main(int argc, char *argv[])
     int burst;
 
     in = fopen(argv[1],"r");
-    
     while (fgets(task,SIZE,in) != NULL) {
         temp = strdup(task);
         name = strsep(&temp,",");

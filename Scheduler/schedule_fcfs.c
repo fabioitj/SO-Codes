@@ -1,5 +1,7 @@
+#include <stddef.h>
 #include "schedule_fcfs.h"
 #include "list.h"
+#include "task.h"
 #include "cpu.h"
 
 struct node *taskList = NULL;
@@ -15,11 +17,12 @@ void add(char *name, int priority, int burst) {
 void schedule() {
     struct node *temp = taskList;
     while (temp != NULL) {
-        run(temp->task->name, temp->task->burst);
+        run(temp->task, temp->task->burst);
         temp = temp->next;
     }
 }
 
+/*
 void insert(struct node **head, Task *task) {
     struct node *newNode = malloc(sizeof(struct node));
     newNode->task = task;
@@ -61,3 +64,4 @@ void delete(struct node **head, Task *task) {
     prev->next = temp->next;
     free(temp);
 }
+*/
