@@ -1,4 +1,6 @@
 #include <stddef.h>
+#include <stdio.h>
+#include <time.h>
 #include "schedule_rr.h"
 #include "list.h"
 #include "task.h"
@@ -18,8 +20,13 @@ void schedule() {
     const int timeSlice = 10;  // Tamanho do quantum para o Round Robin
     struct node *temp = taskList;
     int allTasksCompleted = 0;
+    clock_t start_time;
+
+    start_time = clock();
 
     while (!allTasksCompleted) {
+        clock_t end_time;
+        double total_time;  
         temp = taskList;
         allTasksCompleted = 1;  // Assumimos que todas as tarefas foram concluídas
 
@@ -34,6 +41,12 @@ void schedule() {
                     run(temp->task, temp->task->burst);
                     temp->task->burst = 0;
                 }
+
+                end_time = clock();
+
+                total_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+
+                printf("A tarefa %s iniciou sua execucao em: %f segundos\n", temp->task->name, total_time);
             }
 
             temp = temp->next;

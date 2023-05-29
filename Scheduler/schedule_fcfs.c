@@ -1,4 +1,6 @@
 #include <stddef.h>
+#include <stdio.h>
+#include <time.h>
 #include "schedule_fcfs.h"
 #include "list.h"
 #include "task.h"
@@ -15,9 +17,21 @@ void add(char *name, int priority, int burst) {
 }
 
 void schedule() {
+    clock_t start_time;
     struct node *temp = taskList;
+    start_time = clock();
     while (temp != NULL) {
+        clock_t end_time;
+        double total_time;
+
         run(temp->task, temp->task->burst);
+
+        end_time = clock();
+
+        total_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+
+        printf("A tarefa %s iniciou sua execucao em: %f segundos\n", temp->task->name, total_time);
+
         temp = temp->next;
     }
 }

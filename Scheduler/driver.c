@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <time.h>
 #include "task.h"
 #include "list.h"
-#include "schedule_fcfs.h"
+#include "schedule_rr_p.h"
 
 #define SIZE 100
 
@@ -31,6 +31,11 @@ char* strsep(char** stringp, const char* delim)
 
 int main(int argc, char *argv[])
 {
+    clock_t start_time, end_time;
+    double total_time;
+
+    start_time = clock();
+
     FILE *in;
     char *temp;
     char task[SIZE];
@@ -56,6 +61,13 @@ int main(int argc, char *argv[])
 
     // invoke the scheduler
     schedule();
+
+
+    end_time = clock();
+
+    total_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+
+    printf("\nO tempo de execução foi: %f segundos\n", total_time);
 
     return 0;
 }

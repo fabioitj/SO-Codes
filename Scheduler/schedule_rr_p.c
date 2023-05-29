@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <time.h>
 #include "schedule_rr_p.h"
 #include "list.h"
 #include "task.h"
@@ -50,13 +52,21 @@ void schedule() {
     struct node *temp = taskList;
     bool allTasksCompleted = false;
 
+    clock_t start_time;
+
     sort(&taskList);
+
+    start_time = clock();
 
     while (!allTasksCompleted) {
         allTasksCompleted = true;
         temp = taskList;
 
         while (temp != NULL) {
+            clock_t end_time;
+            double total_time;
+
+
             if (temp->task->burst > 0) {
                 allTasksCompleted = false;
 
@@ -67,6 +77,12 @@ void schedule() {
                     run(temp->task, temp->task->burst);
                     temp->task->burst = 0;
                 }
+
+                end_time = clock();
+
+                total_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+
+                printf("A tarefa %s iniciou sua execucao em: %f segundos\n", temp->task->name, total_time);
             }
 
             temp = temp->next;
